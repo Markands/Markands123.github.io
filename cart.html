@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .cart-container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .cart-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .cart-table th, .cart-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .cart-table th {
+            background-color: #f4f4f4;
+        }
+        .cart-table td img {
+            width: 50px;
+            height: 50px;
+        }
+        .total-price, .discount {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .checkout-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        .checkout-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="cart-container">
+    <h1 class="cart-header">Your Shopping Cart</h1>
+
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody id="cart-items">
+          
+        </tbody>
+    </table>
+
+    <div class="total-price">
+        <strong>Total Price: $<span id="total-price">0</span></strong>
+    </div>
+
+    <div class="discount">
+        <strong>Discount: $<span id="discount">0</span></strong>
+    </div>
+
+    <div class="total-price">
+        <strong>Final Price: $<span id="final-price">0</span></strong>
+    </div>
+
+    <button class="checkout-button" onclick="checkout()">Checkout</button>
+</div>
+
+<script>
+    const cart = [
+        { id: 1, name: 'Product 1', price: 30, quantity: 2, image: 'https://via.placeholder.com/50' },
+        { id: 2, name: 'Product 2', price: 50, quantity: 1, image: 'https://via.placeholder.com/50' },
+        { id: 3, name: 'Product 3', price: 20, quantity: 3, image: 'https://via.placeholder.com/50' },
+    ];
+
+    const discountPercentage = 10; // 10% discount
+
+    function updateCart() {
+        let totalPrice = 0;
+        const cartItems = document.getElementById('cart-items');
+        cartItems.innerHTML = '';
+
+        cart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            totalPrice += itemTotal;
+            
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><img src="${item.image}" alt="${item.name}"></td>
+                <td>${item.name}</td>
+                <td>${item.quantity}</td>
+                <td>$${item.price}</td>
+                <td>$${itemTotal}</td>
+            `;
+            cartItems.appendChild(row);
+        });
+
+        document.getElementById('total-price').innerText = totalPrice;
+        const discount = (totalPrice * discountPercentage) / 100;
+        document.getElementById('discount').innerText = discount.toFixed(2);
+        const finalPrice = totalPrice - discount;
+        document.getElementById('final-price').innerText = finalPrice.toFixed(2);
+    }
+
+    function checkout() {
+        window.location.href = "checkout.html"; // Redirect to checkout page
+    }
+
+    // Initializing the cart
+    updateCart();
+</script>
+
+</body>
+</html>

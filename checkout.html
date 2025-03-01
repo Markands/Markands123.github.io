@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .checkout-container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .checkout-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .back-button {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .back-button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+
+<div class="checkout-container">
+    <h1 class="checkout-header">Checkout Page</h1>
+
+    <p>Your order is ready for payment. Please proceed with the payment to complete your order.</p>
+
+    <!-- Add any checkout details here, like payment form -->
+
+    <button class="back-button" onclick="goBack()">Back to Cart</button>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back(); // Go back to the previous page (cart page)
+    }
+</script>
+
+</body>
+</html>

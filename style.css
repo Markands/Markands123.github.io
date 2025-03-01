@@ -1,0 +1,241 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: transparent;
+}
+.grey{
+    background-color: black;
+    color: white;
+}
+
+header {
+ 
+    color: black;
+    padding: 20px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color:  black;
+    text-decoration: none;
+}
+
+section {
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+}
+.br{
+ 
+    font-size: large;
+    display: flex;
+    justify-content: left;
+ text-align: left;
+}
+nav ul li a {
+    color: rgb(255, 0, 76);
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 15px;
+    display: inline-block;
+}
+
+/* Hover Effect */
+nav ul li a:hover {
+    background-color: #555;
+    border-radius: 5px;
+    color: whitesmoke;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #333;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo a {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 8px 16px;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.nav-links a:hover {
+    background-color: #ff9800;
+    border-radius: 5px;
+}
+
+/* Content Section */
+.content {
+    text-align: center;
+    padding: 50px 20px;
+}
+.content h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+#contact{
+    background-color: black;
+    color: aliceblue;
+    margin: 7px ;
+}
+#about{
+ background-color: yellow;
+    color: rgb(0, 0, 0);
+    border: 2px solid;
+    margin: 5px 330px;
+    width: 999px;
+ 
+  
+   
+}
+.h2{
+    background-color: yellow;
+    color: rgb(0, 0, 0);
+}
+.content{
+    border: 2px solid ;
+   background-color: yellow;
+}
+    /* Search Bar Container */
+    .search-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    /* Search Input Field */
+    .search-bar {
+        width: 350px;
+        padding: 10px 15px;
+        border-radius: 30px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        outline: none;
+    }
+
+    /* Search Button */
+    .search-btn {
+        background-color: #ff7f00; /* Noon-like orange color */
+        border: none;
+        border-radius: 50%;
+        padding: 10px 12px;
+        margin-left: -40px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Icon inside the button */
+    .search-btn i {
+        color: white;
+        font-size: 18px;
+    }
+
+    /* Hover effect for the search button */
+    .search-btn:hover {
+        background-color: #e67e00;
+    }
+
+    /* Focus effect for the input */
+    .search-bar:focus {
+        border: 1px solid #ff7f00;
+    }
+
+    @media (max-width: 768px) {
+        .search-container {
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .search-bar {
+            width: 100%;
+        }
+    }
+    #about h2 {
+        font-size: 32px;
+        color: #333;
+    }
+    
+    #about p {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(2,);
+        gap: 20px;
+        padding: 20px;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .image-item {
+      
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 10px;
+        background: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .image-item img {
+        width: 50%;
+        height: auto;
+        max-height: 250px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    
+    .price {
+        font-size: 18px;
+        font-weight: bold;
+        color: red;
+        margin-top: 10px;
+    }
+    .cart-item-description {
+        font-size: 14px;
+        color: #555;
+        margin-top: 5px;
+    }
+    
