@@ -1,123 +1,451 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caesar Cipher Encoder/Decoder</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 50px;
-        }
-
-    /* I Want when someone select the text the color of the text should be changed to light pink and a little bit transitions.*/
-        *::selection {
-            background-color: white;
-            color: white;
-            transition: background-color 0.2s ease;
-        }
-
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        input, button {
-            width: 80%;
-            padding: 10px;
-            margin: 10px;
-            font-size: 16px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .encode-btn {
-            background-color: #4CAF50;
-        }
-
-        .decode-btn {
-            background-color: #f44336;
-        }
-
-        .encode-btn:hover {
-            background-color: #45a049;
-        }
-
-        .decode-btn:hover {
-            background-color: #e53935;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#542e2b">
+  <meta name="description" content="Sunehri Bakehouse — fresh cakes, Pakistani bakery favourites, biscuits, savouries and treats made with love.">
+  <title>Sunehri Bakehouse | Freshly Baked Happiness</title>
+  <!-- Everything is inside THIS ONE FILE. The only online resources are photos and fonts. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* =============================================================
+       EASY TO EDIT — COLOURS, FONTS & PAGE APPEARANCE
+       ============================================================= */
+    :root { --wine:#542e2b; --wine-dark:#3e201e; --terracotta:#b9684d; --terracotta-dark:#a05037; --cream:#fcf8f2; --paper:#fffdf9; --rose:#f4e4dc; --sand:#f0e9df; --muted:#82726c; --ink:#312525; --line:#e9dfd4; --white:#ffffff; --shadow:0 18px 45px rgba(67,38,29,.09); --serif:'Playfair Display', Georgia, serif; --sans:'DM Sans',Arial,sans-serif; }
+    *,*::before,*::after{box-sizing:border-box}
+    [hidden]{display:none!important}
+    html{scroll-behavior:smooth;scroll-padding-top:110px}
+    body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+    body.locked{overflow:hidden}
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+    svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+    .container{width:min(1200px,calc(100% - 68px));margin:0 auto}
+    .topbar{background:var(--wine);color:#fff6ee;font-size:12px;letter-spacing:.06em;min-height:37px;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px 16px}
+    .topbar span{margin:0 12px;opacity:.5}
+    .site-header{height:91px;background:rgba(252,248,242,.97);border-bottom:1px solid rgba(84,46,43,.08);position:sticky;top:0;z-index:40;backdrop-filter:blur(13px)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:100%;gap:35px}
+    .brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
+    .brand-mark{width:43px;height:43px;border:1.6px solid var(--wine);border-radius:50%;display:grid;place-items:center;position:relative}
+    .brand-mark svg{width:27px;height:27px;stroke-width:1.35}
+    .brand-name{display:block;font:700 26px/1 var(--serif);letter-spacing:-.055em;color:var(--wine)}
+    .brand-small{display:block;text-align:center;font-size:8px;letter-spacing:.28em;font-weight:700;color:var(--terracotta);margin-top:6px}
+    .desktop-nav{display:flex;align-items:center;gap:31px;margin:auto}
+    .desktop-nav a{font-size:13px;font-weight:700;color:#5e4e49;transition:color .2s}
+    .desktop-nav a:hover,.desktop-nav a:focus-visible{color:var(--terracotta)}
+    .nav-actions{display:flex;align-items:center;gap:8px}
+    .icon-btn{height:41px;width:41px;border:0;background:transparent;color:var(--wine);display:grid;place-items:center;border-radius:50%;position:relative}
+    .icon-btn:hover,.icon-btn:focus-visible{background:#f0e7e0}
+    .bag-btn{border:1px solid #dfc8b9;border-radius:50%;width:44px;height:44px}
+    .cart-badge{position:absolute;top:-5px;right:-5px;background:var(--terracotta);color:#fff;font-size:10px;font-weight:700;min-width:19px;height:19px;border-radius:99px;display:grid;place-items:center;padding:0 4px}
+    .mobile-toggle{display:none}
+    .mobile-nav{display:none}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:11px;border:1px solid transparent;border-radius:6px;padding:15px 24px;font-weight:700;font-size:13px;transition:transform .2s,background .2s,box-shadow .2s;min-height:49px}
+    .btn:hover{transform:translateY(-2px)}
+    .btn svg{width:17px;height:17px}
+    .btn-primary{background:var(--wine);color:#fff}
+    .btn-primary:hover{background:var(--wine-dark);box-shadow:0 8px 20px rgba(84,46,43,.18)}
+    .btn-outline{border-color:var(--wine);color:var(--wine);background:transparent}
+    .btn-outline:hover{background:#f6eae2}
+    .btn-light{background:var(--paper);color:var(--wine)}
+    .eyebrow{color:var(--terracotta);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em}
+    .eyebrow::before{content:'✳';font-size:13px;margin-right:10px;vertical-align:0}
+    .section-heading{font:600 clamp(31px,3.4vw,45px)/1.19 var(--serif);letter-spacing:-.04em;color:var(--wine);margin:12px 0 13px}
+    .section-subtitle{color:var(--muted);font-size:14px;line-height:1.8;max-width:520px;margin:0}
+    .hero{overflow:hidden;background:linear-gradient(115deg,#faf1e7 0%,#fcf7f0 49%,#f4e8dc 100%);position:relative}
+    .hero::before{content:'';position:absolute;left:-110px;top:30px;width:290px;height:290px;border:1px solid #e6d8ca;border-radius:50%;pointer-events:none}
+    .hero-inner{min-height:585px;display:grid;grid-template-columns:1fr 1.04fr;align-items:center;gap:56px}
+    .hero-copy{padding:65px 0 72px;position:relative;z-index:1}
+    .hero h1{font:600 clamp(51px,5.4vw,78px)/1.095 var(--serif);letter-spacing:-.057em;color:var(--wine);margin:20px 0 23px;max-width:640px}
+    .hero h1 em{font-weight:500;color:var(--terracotta);font-style:italic}
+    .hero-copy>p{color:#77675f;line-height:1.9;font-size:15px;max-width:455px;margin:0 0 32px}
+    .hero-buttons{display:flex;gap:13px;flex-wrap:wrap}
+    .hero-note{margin-top:29px;display:flex;align-items:center;gap:12px;font-size:12px;color:#83716a}
+    .hero-note svg{color:var(--terracotta);width:17px;height:17px}
+    .hero-visual{height:540px;position:relative;margin-top:20px;margin-bottom:20px}
+    .hero-img-main{width:87%;height:96%;object-fit:cover;object-position:center;border-radius:47% 47% 11px 11px;position:absolute;right:0;top:0;background:#dec0b0;box-shadow:0 24px 50px rgba(61,27,23,.12)}
+    .hero-small-img{position:absolute;left:0;bottom:-4px;width:35%;height:39%;object-fit:cover;border:8px solid var(--cream);border-radius:48% 48% 8px 8px;box-shadow:var(--shadow);background:#e9cbb8}
+    .fresh-stamp{position:absolute;left:-6%;top:18%;height:124px;width:124px;border-radius:50%;background:var(--wine);border:7px solid #faf4ea;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-15deg);box-shadow:var(--shadow);text-align:center;z-index:2}
+    .fresh-stamp svg{width:26px;height:26px;margin-bottom:5px;stroke-width:1.4}
+    .fresh-stamp span{font-size:10px;font-weight:700;letter-spacing:.08em;line-height:1.45;text-transform:uppercase}
+    .hero-flower{position:absolute;right:-22px;bottom:9px;font-size:53px;transform:rotate(-13deg);opacity:.7;color:var(--terracotta)}
+    .trust-strip{background:var(--wine);color:#fff7ef;padding:23px 0}
+    .trust-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+    .trust-item{display:flex;align-items:center;justify-content:center;gap:12px;font-size:12px;font-weight:700;letter-spacing:.015em}
+    .trust-item svg{height:24px;width:24px;color:#e4ac91;stroke-width:1.5}
+    .section{padding:94px 0}
+    .section-top{display:flex;align-items:end;justify-content:space-between;gap:22px;margin-bottom:32px}
+    .text-link{font-size:13px;font-weight:700;color:var(--terracotta);display:flex;align-items:center;gap:9px;white-space:nowrap}
+    .text-link svg{height:16px;width:16px;transition:transform .2s}
+    .text-link:hover svg{transform:translateX(4px)}
+    .category-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:17px}
+    .category-tile{padding:0;border:1px solid var(--line);background:var(--paper);overflow:hidden;text-align:center;border-radius:9px;transition:transform .22s,box-shadow .22s,border-color .22s}
+    .category-tile:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:#ddbaaa}
+    .category-tile img{width:100%;height:166px;object-fit:cover;background:var(--rose)}
+    .category-tile strong{display:block;font:600 17px/1.3 var(--serif);color:var(--wine);margin-top:14px}
+    .category-tile small{display:block;margin:6px 0 17px;font-size:11px;color:var(--muted)}
+    .products-section{background:var(--paper);border-block:1px solid var(--line)}
+    .products-tools{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:30px 0 26px;flex-wrap:wrap}
+    .filter-chips{display:flex;gap:7px;flex-wrap:wrap}
+    .filter-chip{padding:10px 16px;border:1px solid var(--line);border-radius:99px;background:transparent;font-size:12px;font-weight:700;color:#76655f}
+    .filter-chip.active,.filter-chip:hover{color:#fff;background:var(--wine);border-color:var(--wine)}
+    .search-sort{display:flex;align-items:center;gap:10px}
+    .search-box{position:relative}
+    .search-box svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);height:16px;width:16px;color:#98867d}
+    .search-box input{height:42px;border:1px solid var(--line);border-radius:6px;background:var(--cream);padding:0 12px 0 36px;outline:none;width:175px;color:var(--wine);font-size:12px}
+    .search-box input:focus{border-color:var(--terracotta)}
+    .sort-select{height:42px;border:1px solid var(--line);border-radius:6px;background:var(--cream);color:var(--wine);padding:0 10px;font-size:12px;font-weight:600;max-width:154px}
+    .product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+    .product-card{background:var(--paper);border:1px solid #eee5dc;border-radius:9px;overflow:hidden;transition:transform .2s,box-shadow .2s}
+    .product-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+    .product-media{height:240px;position:relative;background:#f4e5d9;overflow:hidden}
+    .product-media img{height:100%;width:100%;object-fit:cover;transition:transform .5s}
+    .product-card:hover .product-media img{transform:scale(1.065)}
+    .product-tag{position:absolute;left:12px;top:12px;color:var(--wine);background:#fff9f1;font-size:10px;font-weight:800;padding:7px 10px;border-radius:3px;letter-spacing:.03em}
+    .wish-btn{position:absolute;right:11px;top:11px;width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:50%;background:rgba(255,253,250,.95);color:var(--wine);transition:background .2s}
+    .wish-btn svg{height:18px;width:18px}
+    .wish-btn.liked{background:var(--wine);color:white}
+    .wish-btn.liked svg{fill:currentColor}
+    .product-body{padding:17px 17px 16px}
+    .product-cat{color:var(--terracotta);text-transform:uppercase;font-size:9px;font-weight:800;letter-spacing:.11em}
+    .product-name{font:600 17px/1.34 var(--serif);color:var(--wine);margin:8px 0 5px;min-height:45px;cursor:pointer}
+    .product-name:hover{text-decoration:underline}
+    .product-detail{color:#8b7b72;font-size:11px;line-height:1.5;min-height:32px;margin:0 0 13px}
+    .product-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px solid var(--line);padding-top:13px}
+    .product-price{font-size:16px;font-weight:800;color:var(--wine);letter-spacing:-.025em}
+    .add-btn{height:35px;width:35px;border:0;border-radius:50%;background:var(--wine);color:#fff;display:grid;place-items:center;transition:background .2s,transform .2s}
+    .add-btn:hover{background:var(--terracotta);transform:scale(1.08)}
+    .add-btn svg{height:17px;width:17px}
+    .empty-state{grid-column:1/-1;text-align:center;padding:62px 10px;color:var(--muted)}
+    .empty-state h3{font:600 25px var(--serif);color:var(--wine)}
+    .count-label{font-size:12px;color:#98867f;margin:20px 0 0;text-align:center}
+    .celebration{background:var(--rose);overflow:hidden}
+    .celebration-inner{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:85px;min-height:465px}
+    .celebration-photo{height:405px;position:relative;margin-top:30px;align-self:end}
+    .celebration-photo img{width:88%;height:100%;object-fit:cover;object-position:center;border-radius:45% 45% 8px 8px}
+    .celebration-photo::after{content:'✷';font-size:110px;position:absolute;right:3%;bottom:12%;color:#b66f53;line-height:1;opacity:.35}
+    .celebration-copy{padding:65px 0}
+    .celebration h2{font:600 clamp(34px,4vw,54px)/1.2 var(--serif);letter-spacing:-.05em;color:var(--wine);margin:17px 0}
+    .celebration p{color:#74625b;line-height:1.9;font-size:14px;max-width:460px;margin:0 0 26px}
+    .occasion-list{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:27px}
+    .occasion-list span{font-size:11px;border:1px solid #dcbfaf;padding:9px 12px;border-radius:100px;color:var(--wine);font-weight:700}
+    .story-section{padding:100px 0}
+    .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .story-image-wrap{position:relative}
+    .story-image-wrap img{width:100%;height:505px;object-fit:cover;border-radius:8px;background:#e4d5c5}
+    .story-small{position:absolute;right:-24px;bottom:-27px;padding:24px 27px;background:var(--wine);color:#fff;border-radius:4px;max-width:205px}
+    .story-small strong{font:600 26px var(--serif);display:block}
+    .story-small span{font-size:11px;line-height:1.6;display:block;margin-top:5px;color:#f4e0d1}
+    .story-content h2{font:600 clamp(34px,3.5vw,49px)/1.18 var(--serif);letter-spacing:-.05em;color:var(--wine);margin:17px 0 22px}
+    .story-content p{line-height:2;color:var(--muted);font-size:14px;margin:0 0 17px}
+    .story-highlights{display:flex;gap:30px;margin-top:29px;flex-wrap:wrap}
+    .story-highlights div{display:flex;align-items:center;gap:9px;color:var(--wine);font-size:12px;font-weight:700}
+    .story-highlights svg{color:var(--terracotta)}
+    .promise-section{background:#f6eee6;padding:65px 0}
+    .promise-intro{text-align:center;margin-bottom:37px}
+    .promise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:19px}
+    .promise-card{background:var(--paper);border:1px solid #eadbd0;border-radius:8px;text-align:center;padding:34px 22px}
+    .promise-card>svg{width:31px;height:31px;color:var(--terracotta);margin:0 auto 14px;stroke-width:1.4}
+    .promise-card h3{color:var(--wine);font:600 19px var(--serif);margin:4px 0 10px}
+    .promise-card p{color:var(--muted);font-size:12px;line-height:1.8;max-width:300px;margin:0 auto}
+    .faq-section{padding:85px 0}
+    .faq-layout{display:grid;grid-template-columns:.75fr 1.25fr;gap:85px;align-items:start}
+    .faq-list{border-top:1px solid var(--line)}
+    .faq-list details{border-bottom:1px solid var(--line);padding:20px 0}
+    .faq-list summary{cursor:pointer;color:var(--wine);font-weight:700;font-size:14px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:14px}
+    .faq-list summary::-webkit-details-marker{display:none}
+    .faq-list summary svg{width:17px;height:17px;transition:transform .2s}
+    .faq-list details[open] summary svg{transform:rotate(180deg)}
+    .faq-list p{color:var(--muted);font-size:13px;line-height:1.9;margin:13px 28px 0 0}
+    .footer{background:var(--wine);color:#efe3d9}
+    .footer-main{display:grid;grid-template-columns:1.55fr .8fr .9fr 1fr;gap:50px;padding:71px 0 53px}
+    .footer .brand-name{color:white}
+    .footer .brand-small{color:#e0ad93}
+    .footer .brand-mark{border-color:#e3b7a2}
+    .footer-logo{margin-bottom:23px}
+    .footer-about{font-size:12px;line-height:1.95;color:#d9c7c0;max-width:300px;margin:0}
+    .footer h4{margin:5px 0 20px;font-size:13px;color:white;letter-spacing:.06em}
+    .footer-links{display:flex;flex-direction:column;gap:14px;color:#decac1;font-size:12px}
+    .footer-links a:hover{color:#fff;text-decoration:underline}
+    .footer-contact p{display:flex;align-items:flex-start;gap:10px;margin:0 0 15px;color:#decac1;font-size:12px;line-height:1.6}
+    .footer-contact svg{height:16px;width:16px;flex-shrink:0;margin-top:1px;color:#dda88e}
+    .socials{display:flex;gap:9px;margin-top:20px}
+    .socials a{border:1px solid #8b6860;border-radius:50%;width:36px;height:36px;display:grid;place-items:center}
+    .socials a:hover{background:#714440}
+    .socials svg{width:17px;height:17px}
+    .footer-bottom{border-top:1px solid #76514b;padding:21px 0;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;color:#ccb6ac;font-size:11px}
+    .whatsapp-fab{position:fixed;z-index:35;right:27px;bottom:25px;display:flex;align-items:center;gap:10px;border:0;border-radius:50px;background:#168e53;color:white;box-shadow:0 7px 22px rgba(16,85,54,.27);padding:13px 17px;font-size:12px;font-weight:700}
+    .whatsapp-fab svg{width:21px;height:21px}
+    .whatsapp-fab:hover{background:#117543}
+    .overlay{position:fixed;inset:0;background:rgba(31,19,17,.48);z-index:79;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+    .overlay.show{opacity:1;visibility:visible}
+    .cart-drawer{position:fixed;z-index:80;top:0;right:0;height:100dvh;width:min(430px,100%);background:var(--paper);transform:translateX(103%);transition:transform .28s;display:flex;flex-direction:column;box-shadow:-10px 0 35px rgba(0,0,0,.08)}
+    .cart-drawer.open{transform:translateX(0)}
+    .drawer-heading{padding:23px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .drawer-heading h2{font:600 27px var(--serif);color:var(--wine);margin:0}
+    .drawer-items{overflow:auto;flex:1;padding:22px 24px}
+    .cart-item{display:grid;grid-template-columns:80px 1fr;gap:14px;padding:0 0 20px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+    .cart-item img{width:80px;height:87px;object-fit:cover;border-radius:5px}
+    .cart-item h3{font:600 16px/1.3 var(--serif);color:var(--wine);margin:0 0 7px}
+    .cart-item p{font-size:12px;color:var(--muted);margin:0 0 9px}
+    .cart-item-bottom{display:flex;align-items:center;justify-content:space-between;gap:9px}
+    .qty-control{border:1px solid var(--line);display:inline-flex;align-items:center;border-radius:5px;overflow:hidden;height:29px}
+    .qty-control button{width:29px;height:29px;border:0;background:#faf1e9;display:grid;place-items:center;color:var(--wine)}
+    .qty-control button:hover{background:var(--rose)}
+    .qty-control button svg{width:13px;height:13px}
+    .qty-control span{min-width:27px;text-align:center;font-weight:700;font-size:11px}
+    .remove-item{border:0;background:none;color:var(--terracotta);font-size:11px;text-decoration:underline;padding:0}
+    .drawer-footer{padding:20px 24px 26px;border-top:1px solid var(--line)}
+    .summary-line{display:flex;justify-content:space-between;gap:15px;margin-bottom:12px;font-size:13px;color:#74615a}
+    .summary-line.total{font-size:18px;font-weight:800;color:var(--wine);margin:16px 0}
+    .drawer-footer .btn{width:100%}
+    .delivery-hint{color:var(--terracotta);font-size:11px;text-align:center;margin:0 0 14px}
+    .cart-empty{text-align:center;padding:65px 13px;color:var(--muted)}
+    .cart-empty svg{width:52px;height:52px;color:var(--terracotta);margin:auto}
+    .cart-empty h3{font:600 23px var(--serif);color:var(--wine);margin:15px 0 8px}
+    .cart-empty p{font-size:13px;line-height:1.7;margin-bottom:24px}
+    .modal{position:fixed;z-index:90;inset:0;display:none;align-items:center;justify-content:center;padding:20px;overflow:auto}
+    .modal.open{display:flex}
+    .modal-panel{background:var(--paper);width:min(520px,100%);max-height:calc(100dvh - 40px);overflow:auto;border-radius:10px;padding:28px;box-shadow:0 20px 75px rgba(32,19,18,.25);position:relative}
+    .modal-top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:7px}
+    .modal h2{font:600 28px var(--serif);color:var(--wine);margin:0}
+    .modal-description{font-size:12px;color:var(--muted);line-height:1.7;margin:8px 0 22px}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .form-field{display:flex;flex-direction:column;gap:7px;margin-bottom:15px}
+    .form-field.full{grid-column:1/-1}
+    .form-field label{color:var(--wine);font-size:12px;font-weight:700}
+    .form-field input,.form-field select,.form-field textarea{width:100%;background:#fcf8f2;border:1px solid #e4d7cb;border-radius:5px;color:var(--ink);outline:none;padding:12px 13px;font-size:13px;min-height:44px}
+    .form-field input:focus,.form-field textarea:focus,.form-field select:focus{border-color:var(--terracotta)}
+    .form-field textarea{resize:vertical;min-height:70px}
+    .checkout-total{padding:13px 15px;background:var(--rose);border-radius:5px;display:flex;justify-content:space-between;color:var(--wine);font-size:15px;font-weight:800;margin:8px 0 18px}
+    .fine-print{font-size:10px;line-height:1.7;color:#93847a;text-align:center;margin:10px 0 0}
+    .toast{position:fixed;bottom:25px;left:50%;transform:translate(-50%,110px);opacity:0;background:var(--wine);color:white;z-index:200;padding:13px 20px;border-radius:7px;font-size:12px;font-weight:600;max-width:calc(100% - 30px);box-shadow:var(--shadow);transition:transform .25s,opacity .25s;pointer-events:none;text-align:center}
+    .toast.show{transform:translate(-50%,0);opacity:1}
+    :focus-visible{outline:3px solid #dca284;outline-offset:3px}
+    @media (max-width:1080px){.desktop-nav{gap:17px}.hero-inner{gap:28px}.category-grid{grid-template-columns:repeat(3,1fr)}.category-tile img{height:170px}.product-grid{grid-template-columns:repeat(3,1fr)}.story-grid,.celebration-inner{gap:50px}.footer-main{gap:27px}}
+    @media (max-width:760px){.container{width:calc(100% - 36px)}.topbar{font-size:10px}.site-header{height:72px}.brand-name{font-size:23px}.brand-mark{height:38px;width:38px}.desktop-nav{display:none}.mobile-toggle{display:grid}.mobile-nav{display:flex;flex-direction:column;gap:0;position:absolute;top:72px;left:0;right:0;background:var(--cream);border-bottom:1px solid var(--line);box-shadow:0 13px 20px #31252512;max-height:0;overflow:hidden;transition:max-height .25s}.mobile-nav.open{max-height:330px}.mobile-nav a{font-size:14px;font-weight:700;padding:15px 24px;border-bottom:1px solid var(--line)}.hero-inner{grid-template-columns:1fr;gap:0}.hero-copy{padding:60px 0 35px}.hero h1{font-size:clamp(45px,9vw,63px);max-width:610px}.hero-visual{height:410px;margin:0 20px 30px 40px}.hero-img-main{width:83%;height:100%}.hero-small-img{width:38%;height:39%;left:0;bottom:0}.fresh-stamp{width:100px;height:100px;top:12%;left:0}.trust-inner{grid-template-columns:repeat(2,1fr);gap:18px}.trust-item{justify-content:flex-start;font-size:11px}.section{padding:65px 0}.section-heading{font-size:36px}.category-grid{grid-template-columns:repeat(3,1fr);gap:11px}.category-tile img{height:140px}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.product-media{height:210px}.products-tools{align-items:stretch}.filter-chips{width:100%;overflow:auto;flex-wrap:nowrap;padding-bottom:3px}.filter-chip{white-space:nowrap}.search-sort{width:100%}.search-box{flex:1}.search-box input{width:100%}.celebration-inner,.story-grid,.faq-layout{grid-template-columns:1fr;gap:35px}.celebration-photo{height:330px;width:85%;order:2;margin:0 auto}.celebration-copy{padding:61px 0 0;order:1}.celebration-inner{padding-bottom:38px}.story-image-wrap{order:2}.story-content{order:1}.story-image-wrap img{height:350px}.story-small{right:0;bottom:-20px}.story-section{padding:70px 0 90px}.promise-grid{grid-template-columns:1fr}.footer-main{grid-template-columns:1fr 1fr;gap:37px}.footer-main>div:first-child{grid-column:1/-1}.faq-section{padding:65px 0}.whatsapp-fab{right:15px;bottom:15px}}
+    @media (max-width:460px){.brand{gap:8px}.brand-name{font-size:20px}.brand-small{font-size:7px}.icon-btn{width:35px;height:35px}.bag-btn{height:39px;width:39px}.hero h1{font-size:47px}.hero-visual{height:320px;margin:0 10px 25px 25px}.hero-small-img{border-width:5px}.fresh-stamp{width:85px;height:85px;border-width:5px}.fresh-stamp svg{width:21px;height:21px}.fresh-stamp span{font-size:8px}.trust-item{gap:8px;font-size:9px}.trust-item svg{width:19px;height:19px}.category-grid{grid-template-columns:repeat(2,1fr)}.category-tile img{height:155px}.section-top{align-items:start;flex-direction:column}.product-media{height:164px}.product-body{padding:12px}.product-name{font-size:15px;min-height:41px}.product-detail{font-size:10px}.product-price{font-size:13px}.product-tag{font-size:8px;padding:6px 7px}.sort-select{width:125px}.footer-main{grid-template-columns:1fr 1fr;gap:25px}.footer-main>div:last-child{grid-column:1/-1}.form-grid{grid-template-columns:1fr;gap:0}.modal-panel{padding:22px}.whatsapp-fab span{display:none}.whatsapp-fab{padding:12px}}
+  </style>
 </head>
 <body>
+<!-- Reusable icons (no external icon library needed) -->
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M4 8h16l-1 13H5L4 8Z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-7-7 7 7-7 7"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 8.5c0 4.1-8.8 10.1-8.8 10.1S3.2 12.6 3.2 8.5A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 8.8 1.5Z"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2 6h13v12H2zM15 10h4l3 4v4h-7"/><circle cx="6" cy="19" r="2"/><circle cx="18.5" cy="19" r="2"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2Z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-gift" viewBox="0 0 24 24"><path d="M3 10h18v11H3zM2 7h20v4H2zM12 7v14M12 7S5 7 6 3c1-3 6 0 6 4Zm0 0s7 0 6-4c-1-3-6 0-6 4Z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 3h4l1 5-2.5 2a16 16 0 0 0 6.5 6.5l2-2.5 5 1v4c0 1.5-1 2-2.5 2C10.5 21 3 13.5 3 5.5 3 4 3.5 3 5 3Z"/></symbol>
+  <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m5 9 7 7 7-7"/></symbol>
+  <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M20.4 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20l1.1-4.2A8.5 8.5 0 1 1 20.4 11.5Z"/><path d="M8.5 7.5c-.7.2-1.3 1.5-1.1 2.3.5 2.2 3 4.8 5.3 5.8 2 .9 3.1.4 3.6-.4l.3-1-2.2-1.1-1 1a7 7 0 0 1-3.4-3.5l.8-1.1-1.3-2Z"/></symbol>
+  <symbol id="i-wheat" viewBox="0 0 24 24"><path d="M12 21V6M12 15C7 15 5 12 6 9c4 0 6 2 6 6Zm0-5C9 10 7 7 8 4c4 1 4 3 4 6Zm0 8c5 0 7-3 6-6-4 0-6 2-6 6Zm0-8c3 0 5-3 4-6-4 1-4 3-4 6Z"/></symbol>
+</svg>
 
-    <div class="container">
-        <h1>Caesar Cipher Encoder/Decoder</h1>
-        <label for="textInput">Enter Text:</label>
-        <input type="text" id="textInput" placeholder="Enter text to encode/decode">
-        <br>
-        <button class="encode-btn" onclick="caesarCipher(3)">Encode</button>
-        <button class="decode-btn" onclick="caesarCipher(-3)">Decode</button>
-        <div class="result" id="result"></div>
-    </div>
+<div class="topbar" id="announcement">Freshly baked, delivered with love <span>✦</span> Free delivery on orders over Rs. 3,500</div>
+<header class="site-header">
+  <div class="container nav-inner">
+    <a href="#home" class="brand" aria-label="Sunehri Bakehouse home"><span class="brand-mark"><svg><use href="#i-wheat"/></svg></span><span><span class="brand-name" data-brand>Sunehri.</span><span class="brand-small">BAKEHOUSE & SWEETS</span></span></a>
+    <nav class="desktop-nav" aria-label="Main navigation"><a href="#home">Home</a><a href="#categories">Our Specialties</a><a href="#shop">Shop All</a><a href="#custom-cakes">Custom Cakes</a><a href="#our-story">Our Story</a><a href="#contact">Contact</a></nav>
+    <div class="nav-actions"><button class="icon-btn" id="jumpSearch" aria-label="Search products"><svg><use href="#i-search"/></svg></button><button class="icon-btn bag-btn" id="openCart" aria-label="Open shopping cart"><svg><use href="#i-bag"/></svg><span class="cart-badge" id="cartCount">0</span></button><button class="icon-btn mobile-toggle" id="mobileToggle" aria-label="Toggle menu" aria-expanded="false"><svg><use href="#i-menu"/></svg></button></div>
+  </div>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation"><a href="#home">Home</a><a href="#categories">Our Specialties</a><a href="#shop">Shop All</a><a href="#custom-cakes">Custom Cakes</a><a href="#our-story">Our Story</a><a href="#contact">Contact</a></nav>
+</header>
+<main>
+  <section class="hero" id="home"><div class="container hero-inner">
+    <div class="hero-copy"><span class="eyebrow">A little sweetness, every day</span><h1>Made with love.<br> Baked for <em>joy.</em></h1><p>From dreamy celebration cakes to the familiar crunch of nankhatai and warm savouries — there's something delicious waiting for everyone.</p><div class="hero-buttons"><a href="#shop" class="btn btn-primary">Explore our menu <svg><use href="#i-arrow"/></svg></a><a href="#custom-cakes" class="btn btn-outline">Order a custom cake</a></div><div class="hero-note"><svg><use href="#i-sparkle"/></svg> Freshly prepared treats for your everyday celebrations</div></div>
+    <div class="hero-visual"><img class="hero-img-main" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=950&auto=format&fit=crop&q=85" alt="Beautiful freshly made celebration cake" fetchpriority="high"><img class="hero-small-img" src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=500&auto=format&fit=crop&q=80" alt="Golden freshly baked pastries"><div class="fresh-stamp"><svg><use href="#i-wheat"/></svg><span>Freshly<br>baked<br>daily</span></div><span class="hero-flower" aria-hidden="true">✳</span></div>
+  </div></section>
+  <div class="trust-strip"><div class="container trust-inner"><div class="trust-item"><svg><use href="#i-sparkle"/></svg>Baked fresh every day</div><div class="trust-item"><svg><use href="#i-gift"/></svg>Gifts made special</div><div class="trust-item"><svg><use href="#i-truck"/></svg>Local delivery available</div><div class="trust-item"><svg><use href="#i-heart"/></svg>Made with a lot of love</div></div></div>
+  <section class="section" id="categories"><div class="container"><div class="section-top"><div><span class="eyebrow">Something for every craving</span><h2 class="section-heading">Explore our specialties</h2><p class="section-subtitle">Your old favourites, plus a few irresistible new ones.</p></div><a href="#shop" class="text-link">View the full menu <svg><use href="#i-arrow"/></svg></a></div><div class="category-grid" id="categoryGrid"></div></div></section>
+  <section class="section products-section" id="shop"><div class="container"><div class="section-top"><div><span class="eyebrow">From our kitchen to yours</span><h2 class="section-heading">Fresh from the oven</h2><p class="section-subtitle">Browse our freshly prepared sweet and savoury favourites. All prices are in Pakistani rupees.</p></div></div><div class="products-tools"><div class="filter-chips" id="filterChips"></div><div class="search-sort"><label class="search-box"><svg><use href="#i-search"/></svg><input id="productSearch" type="search" placeholder="Search treats..." aria-label="Search products"></label><select id="sortProducts" class="sort-select" aria-label="Sort products"><option value="featured">Featured</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option><option value="name">Name: A to Z</option></select></div></div><div class="product-grid" id="productGrid"></div><p class="count-label" id="productCount"></p></div></section>
+  <section class="celebration" id="custom-cakes"><div class="container celebration-inner"><div class="celebration-photo"><img src="https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=850&auto=format&fit=crop&q=85" alt="Decorated cake for special occasions" loading="lazy"></div><div class="celebration-copy"><span class="eyebrow">Made just for you</span><h2>Your moments deserve something extra sweet.</h2><p>Birthdays, weddings, anniversaries, Eid gatherings or simply because — share your idea and we'll help you create a cake worth celebrating.</p><div class="occasion-list"><span>Birthdays</span><span>Weddings</span><span>Anniversaries</span><span>Eid & more</span></div><button class="btn btn-primary" id="customCakeButton">Enquire about custom cakes <svg><use href="#i-arrow"/></svg></button></div></div></section>
+  <section class="story-section" id="our-story"><div class="container story-grid"><div class="story-image-wrap"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=950&auto=format&fit=crop&q=85" alt="Fresh artisan bread prepared in the bakery" loading="lazy"><div class="story-small"><strong>Fresh every day.</strong><span>Because the little things make life sweeter.</span></div></div><div class="story-content"><span class="eyebrow">Our little bakery</span><h2>A love for baking, a taste of home.</h2><p>At <span data-brand-inline>Sunehri Bakehouse</span>, we believe the best memories often begin with good food. Think soft, creamy cakes for family milestones, crispy chicken patties for evening chai, and the comforting taste of traditional biscuits.</p><p>Our menu brings together familiar Pakistani bakery favourites and modern desserts, made to turn everyday moments into something worth sharing.</p><div class="story-highlights"><div><svg><use href="#i-check"/></svg>Fresh ingredients</div><div><svg><use href="#i-check"/></svg>Made for sharing</div><div><svg><use href="#i-check"/></svg>Sweet & savoury</div></div></div></div></section>
+  <section class="promise-section"><div class="container"><div class="promise-intro"><span class="eyebrow">The Sunehri promise</span><h2 class="section-heading">Goodness in every bite</h2></div><div class="promise-grid"><div class="promise-card"><svg><use href="#i-clock"/></svg><h3>Freshly made</h3><p>We keep the good stuff coming, from morning rusks to evening treats.</p></div><div class="promise-card"><svg><use href="#i-heart"/></svg><h3>Made with care</h3><p>Beautiful bakes, familiar flavours and little touches that make a difference.</p></div><div class="promise-card"><svg><use href="#i-gift"/></svg><h3>Celebrate together</h3><p>Thoughtful cake and gifting options for all your special moments.</p></div></div></div></section>
+  <section class="faq-section" id="faq"><div class="container faq-layout"><div><span class="eyebrow">Need a hand?</span><h2 class="section-heading">Frequently asked questions</h2><p class="section-subtitle">A few helpful answers before you place your order.</p></div><div class="faq-list"><details><summary>How do I place an order?<svg><use href="#i-chevron"/></svg></summary><p>Add items to your cart, enter your details, and send your order through WhatsApp. We will confirm availability and the final total with you.</p></details><details><summary>Do you offer local delivery?<svg><use href="#i-chevron"/></svg></summary><p>Yes, local delivery is available in selected areas. Delivery charges and availability are confirmed before we prepare your order.</p></details><details><summary>Can I order a custom birthday or wedding cake?<svg><use href="#i-chevron"/></svg></summary><p>Absolutely! Click “Enquire about custom cakes” to share your preferred flavours, size, theme and date through WhatsApp.</p></details><details><summary>How much notice should I give?<svg><use href="#i-chevron"/></svg></summary><p>For custom or large orders, advance notice is recommended. Please contact us to confirm how soon we can have your order ready.</p></details><details><summary>How can I pay?<svg><use href="#i-chevron"/></svg></summary><p>Payment options, including cash on delivery or online transfer where available, are confirmed over WhatsApp before an order is accepted.</p></details></div></div></section>
+</main>
+<footer class="footer" id="contact"><div class="container"><div class="footer-main"><div><a href="#home" class="brand footer-logo"><span class="brand-mark"><svg><use href="#i-wheat"/></svg></span><span><span class="brand-name" data-brand>Sunehri.</span><span class="brand-small">BAKEHOUSE & SWEETS</span></span></a><p class="footer-about">A bakery for the sweet little moments. Cakes, cookies, savouries and Pakistani favourites — made to share, gift, and enjoy.</p><div class="socials"><a href="https://www.instagram.com/" target="_blank" rel="noopener" id="instagramLink" aria-label="Instagram"><svg><use href="#i-instagram"/></svg></a><a href="#contact" id="footerWhatsApp" aria-label="WhatsApp"><svg><use href="#i-whatsapp"/></svg></a></div></div><div><h4>QUICK LINKS</h4><div class="footer-links"><a href="#home">Home</a><a href="#shop">Shop all</a><a href="#custom-cakes">Custom cakes</a><a href="#our-story">Our story</a><a href="#faq">FAQs</a></div></div><div><h4>OUR MENU</h4><div class="footer-links" id="footerCategories"></div></div><div class="footer-contact"><h4>VISIT OR CONTACT</h4><p><svg><use href="#i-pin"/></svg><span id="contactAddress">Multan, Punjab, Pakistan</span></p><p><svg><use href="#i-clock"/></svg><span id="contactHours">Daily · 9:00 AM – 11:00 PM</span></p><p id="contactPhoneWrap" hidden><svg><use href="#i-phone"/></svg><span id="contactPhone"></span></p><p id="contactEmailWrap" hidden><svg><use href="#i-arrow"/></svg><span id="contactEmail"></span></p></div></div><div class="footer-bottom"><span id="copyright"></span><span>Handcrafted with love in Pakistan · Photos courtesy of Unsplash</span></div></div></footer>
+<button class="whatsapp-fab" id="floatingWhatsapp" aria-label="Enquire through WhatsApp"><svg><use href="#i-whatsapp"/></svg><span>Chat with us</span></button>
+<div class="overlay" id="overlay" aria-hidden="true"></div>
+<aside class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Shopping cart"><div class="drawer-heading"><h2>Your basket <span aria-hidden="true">♡</span></h2><button class="icon-btn" id="closeCart" aria-label="Close basket"><svg><use href="#i-x"/></svg></button></div><div class="drawer-items" id="cartItems"></div><div class="drawer-footer" id="cartFooter"></div></aside>
+<div class="modal" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle"><div class="modal-panel"><div class="modal-top"><h2 id="checkoutTitle">Almost there!</h2><button class="icon-btn" id="closeCheckout" aria-label="Close checkout"><svg><use href="#i-x"/></svg></button></div><p class="modal-description">Tell us where to send your treats. Your order will be sent through WhatsApp for confirmation — payment is not collected here.</p><form id="checkoutForm"><div class="form-grid"><div class="form-field"><label for="customerName">Your name *</label><input id="customerName" required maxlength="70" autocomplete="name" placeholder="Full name"></div><div class="form-field"><label for="customerPhone">Phone number *</label><input id="customerPhone" required type="tel" maxlength="22" autocomplete="tel" placeholder="03XX XXXXXXX" pattern="[+0-9() -]{10,22}" title="Enter a valid phone number"></div><div class="form-field full"><label for="deliveryType">How would you like your order? *</label><select id="deliveryType"><option value="delivery">Home delivery</option><option value="pickup">Pickup from bakery</option></select></div><div class="form-field full" id="addressField"><label for="customerAddress">Delivery address *</label><textarea id="customerAddress" placeholder="House / street / area / city" required maxlength="300"></textarea></div><div class="form-field full"><label for="customerNotes">Notes (optional)</label><textarea id="customerNotes" placeholder="Preferred date, cake message, instructions..." maxlength="350"></textarea></div></div><div class="checkout-total"><span>Estimated total</span><span id="checkoutTotal">Rs. 0</span></div><button class="btn btn-primary" type="submit" style="width:100%"><svg><use href="#i-whatsapp"/></svg> Send order via WhatsApp</button><button class="btn btn-outline" type="button" id="copyOrder" style="width:100%;margin-top:9px">Copy order details</button><p class="fine-print">Prices and delivery are estimates until the bakery confirms your order.</p></form></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+  'use strict';
+  /* =====================================================================
+     ✏️ EDIT YOUR BAKERY DETAILS HERE — YOUR FIRST STEP!
+     WhatsApp format: country code + phone WITHOUT leading + or 0.
+     Example only: 923001234567 means Pakistan +92 300 1234567.
+     Add YOUR OWN real phone number before publishing.
+     If whatsappNumber is empty, WhatsApp opens a SHARE link for testing.
+     ===================================================================== */
+  const SETTINGS = {
+    bakeryName: 'Sunehri Bakehouse',
+    logoText: 'Sunehri.',
+    city: 'Multan',
+    address: 'Multan, Punjab, Pakistan', // Replace with your real shop address
+    openingHours: 'Daily · 9:00 AM – 11:00 PM',
+    contactPhone: '',                    // e.g. '0300 1234567' (visible in footer)
+    contactEmail: '',                    // e.g. 'orders@yourbakery.pk'
+    whatsappNumber: '',                  // IMPORTANT: put your real number here before publishing
+    instagramUrl: 'https://www.instagram.com/', // replace with your Instagram profile
+    deliveryFee: 250,                   // rupees for local delivery
+    freeDeliveryOver: 3500,             // free delivery for orders of this amount or more
+    currencyPrefix: 'Rs. ',
+  };
 
-    <script>
-        function caesarCipher(shift) {
-            let inputText = document.getElementById("textInput").value;
-            let outputText = '';
-            
-            // Loop through the input text and apply Caesar cipher
-            for (let i = 0; i < inputText.length; i++) {
-                let char = inputText[i];
+  /* =====================================================================
+     ✏️ EDIT YOUR PRODUCTS HERE
+     For each product you can change: name, category, price, size, badge,
+     description and image. You can also ADD or DELETE product lines.
+     images.unsplash.com links are online photos; replace with your own URLs.
+     Every product ID MUST be unique. Prices are in Pakistani rupees.
+     ===================================================================== */
+  const PRODUCTS = [
+    { id:1,  name:'Chocolate Fudge Cake', category:'Cakes', price:2650, size:'2 lb · rich chocolate', badge:'Bestseller', image:'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=680&auto=format&fit=crop&q=80', description:'Soft sponge layered with decadent chocolate fudge.' },
+    { id:2,  name:'Red Velvet Celebration Cake', category:'Cakes', price:3150, size:'2 lb · cream cheese', badge:'Customer pick', image:'https://images.unsplash.com/photo-1586788680434-30d324b2d46f?w=680&auto=format&fit=crop&q=80', description:'Velvety layers and a creamy, tangy frosting.' },
+    { id:3,  name:'Lotus Biscoff Cake', category:'Cakes', price:3450, size:'2 lb · caramel biscuit', badge:'Popular', image:'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=680&auto=format&fit=crop&q=80', description:'Caramel notes, biscuit crunch and delicate cream.' },
+    { id:4,  name:'Vanilla Strawberry Cake', category:'Cakes', price:2850, size:'2 lb · fruity & light', badge:'', image:'https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=680&auto=format&fit=crop&q=80', description:'Fluffy vanilla sponge with sweet strawberry notes.' },
+    { id:5,  name:'Chicken Puff Patties', category:'Savouries', price:720, size:'Box of 4', badge:'Tea-time favourite', image:'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=680&auto=format&fit=crop&q=80', description:'Golden flaky puffs with a savoury chicken filling.' },
+    { id:6,  name:'Crispy Chicken Samosas', category:'Savouries', price:600, size:'Box of 6', badge:'', image:'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=680&auto=format&fit=crop&q=80', description:'Crisp triangle pastries with spiced chicken.' },
+    { id:7,  name:'Mini Pizza Bites', category:'Savouries', price:920, size:'Box of 4', badge:'', image:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=680&auto=format&fit=crop&q=80', description:'Cheesy mini pizzas perfect for sharing.' },
+    { id:8,  name:'Traditional Nankhatai', category:'Biscuits & Rusks', price:650, size:'250 g box', badge:'Desi classic', image:'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=680&auto=format&fit=crop&q=80', description:'Buttery, crumbly, nostalgic tea-time biscuits.' },
+    { id:9,  name:'Zeera Salted Biscuits', category:'Biscuits & Rusks', price:480, size:'250 g pack', badge:'', image:'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=680&auto=format&fit=crop&q=80', description:'Light, crisp and gently spiced with cumin.' },
+    { id:10, name:'Crunchy Cake Rusk', category:'Biscuits & Rusks', price:750, size:'500 g pack', badge:'Tea-time favourite', image:'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=680&auto=format&fit=crop&q=80', description:'Golden double-baked slices for your chai.' },
+    { id:11, name:'Assorted Mithai Box', category:'Mithai', price:2650, size:'1 kg gift box', badge:'Gift favourite', image:'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=680&auto=format&fit=crop&q=80', description:'A handpicked assortment of traditional sweet treats.' },
+    { id:12, name:'Soft Gulab Jamun', category:'Mithai', price:850, size:'500 g box', badge:'Desi classic', image:'https://images.unsplash.com/photo-1605197791368-8f3fdc5e5c6f?w=680&auto=format&fit=crop&q=80', description:'Tender, syrup-soaked dumplings served with love.' },
+    { id:13, name:'Fresh Milk Bread', category:'Breads', price:280, size:'1 loaf', badge:'Baked daily', image:'https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=680&auto=format&fit=crop&q=80', description:'Pillowy-soft sandwich bread for every morning.' },
+    { id:14, name:'Butter Croissants', category:'Breads', price:680, size:'Box of 4', badge:'', image:'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=680&auto=format&fit=crop&q=80', description:'Flaky, golden layers with buttery goodness.' },
+    { id:15, name:'Sweet Moments Gift Hamper', category:'Gift Boxes', price:3950, size:'Curated assorted box', badge:'Perfect gift', image:'https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=680&auto=format&fit=crop&q=80', description:'A delightful collection of sweets and baked treats.' },
+    { id:16, name:'Chocolate Cookie Box', category:'Gift Boxes', price:1250, size:'Box of 12 cookies', badge:'', image:'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=680&auto=format&fit=crop&q=80', description:'A charming box packed with chocolatey joy.' }
+  ];
 
-                // Check if the character is a letter
-                if (char.match(/[a-zA-Z]/)) {
-                    let code = inputText.charCodeAt(i);
-                    // Lowercase letters (a-z)
-                    if (char >= 'a' && char <= 'z') {
-                        // Apply Caesar shift
-                        outputText += String.fromCharCode(((code - 97 + shift) % 26 + 26) % 26 + 97);
-                    }
-                    // Uppercase letters (A-Z)
-                    else if (char >= 'A' && char <= 'Z') {
-                        // Apply Caesar shift
-                        outputText += String.fromCharCode(((code - 65 + shift) % 26 + 26) % 26 + 65);
-                    }
-                } else {
-                    // If it's not a letter, just add the character as is
-                    outputText += char;
-                }
-            }
+  /* ✏️ EDIT CATEGORIES — category names must match PRODUCTS.category exactly. */
+  const CATEGORIES = [
+    {name:'Cakes', label:'Cakes', sub:'Celebrate sweetly', image:'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=430&auto=format&fit=crop&q=75'},
+    {name:'Savouries', label:'Savouries', sub:'Golden & delicious', image:'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=430&auto=format&fit=crop&q=75'},
+    {name:'Biscuits & Rusks', label:'Biscuits & Rusks', sub:'Perfect with chai', image:'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=430&auto=format&fit=crop&q=75'},
+    {name:'Mithai', label:'Mithai', sub:'Desi favourites', image:'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=430&auto=format&fit=crop&q=75'},
+    {name:'Breads', label:'Breads', sub:'Freshly baked', image:'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=430&auto=format&fit=crop&q=75'},
+    {name:'Gift Boxes', label:'Gift Boxes', sub:'Thoughtful treats', image:'https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=430&auto=format&fit=crop&q=75'}
+  ];
 
-            // Display the encoded/decoded result
-            document.getElementById("result").textContent = "Result: " + outputText;
-        }
-    </script>
+  /* Everything below runs the website. Edit above first. */
+  const $ = id => document.getElementById(id);
+  const icon = name => `<svg aria-hidden="true"><use href="#i-${name}"/></svg>`;
+  const money = value => SETTINGS.currencyPrefix + Math.round(value).toLocaleString('en-PK');
+  const escapeHTML = str => String(str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const safeRead = (key,fallback) => {try{return JSON.parse(localStorage.getItem(key)) ?? fallback}catch{return fallback}};
+  const safeSave = (key,value) => {try{localStorage.setItem(key,JSON.stringify(value))}catch{}};
+  let cart = safeRead('sunehri-cart-v1',{});
+  let favorites = safeRead('sunehri-favs-v1',[]);
+  let activeCategory='All';
+  let toastTimer;
+  let modalOpen=false;
+  function toast(message){clearTimeout(toastTimer);$('toast').textContent=message;$('toast').classList.add('show');toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2700)}
+  function buildWhatsAppURL(text){const num=String(SETTINGS.whatsappNumber).replace(/\D/g,'');return 'https://wa.me/'+(num||'')+'?text='+encodeURIComponent(text)}
+  function openWhatsApp(text){window.open(buildWhatsAppURL(text),'_blank','noopener,noreferrer');if(!SETTINGS.whatsappNumber)toast('Demo mode: add your WhatsApp number in SETTINGS to receive direct orders.')}
+  function subtotal(){return Object.entries(cart).reduce((sum,[id,qty])=>{const p=PRODUCTS.find(x=>x.id===Number(id));return sum+(p?p.price*qty:0)},0)}
+  function cartCount(){return Object.values(cart).reduce((sum,qty)=>sum+qty,0)}
+  function deliveryCost(){return $('deliveryType')?.value==='pickup' ? 0 : (subtotal()>=SETTINGS.freeDeliveryOver?0:SETTINGS.deliveryFee)}
+  function syncCart(){safeSave('sunehri-cart-v1',cart);$('cartCount').textContent=cartCount();renderCart();updateCheckoutTotal()}
+  function addToCart(id){if(!PRODUCTS.some(p=>p.id===id))return;cart[id]=(cart[id]||0)+1;syncCart();toast('Added to basket!');}
+  function changeQty(id,step){if(!cart[id])return;cart[id]+=step;if(cart[id]<=0)delete cart[id];syncCart()}
+  function removeFromCart(id){delete cart[id];syncCart();toast('Removed from basket')}
+  function renderCategories(){
+    $('categoryGrid').innerHTML=CATEGORIES.map(c=>`<button type="button" class="category-tile" data-category="${escapeHTML(c.name)}"><img src="${escapeHTML(c.image)}" alt="${escapeHTML(c.label)}" loading="lazy"><strong>${escapeHTML(c.label)}</strong><small>${escapeHTML(c.sub)}</small></button>`).join('');
+    $('footerCategories').innerHTML=CATEGORIES.map(c=>`<a href="#shop" data-category="${escapeHTML(c.name)}">${escapeHTML(c.label)}</a>`).join('');
+    $('filterChips').innerHTML=['All',...CATEGORIES.map(c=>c.name)].map(name=>`<button type="button" class="filter-chip ${name===activeCategory?'active':''}" data-category="${escapeHTML(name)}">${name==='All'?'All treats':escapeHTML(name)}</button>`).join('');
+  }
+  function setCategory(name){activeCategory=name;$('filterChips').querySelectorAll('button').forEach(b=>{const active=b.dataset.category===name;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});renderProducts()}
+  function renderProducts(){
+    const term=$('productSearch').value.trim().toLowerCase();const sort=$('sortProducts').value;
+    let visible=PRODUCTS.filter(p=>(activeCategory==='All'||p.category===activeCategory)&&(p.name+' '+p.category+' '+p.description).toLowerCase().includes(term));
+    if(sort==='low')visible.sort((a,b)=>a.price-b.price);if(sort==='high')visible.sort((a,b)=>b.price-a.price);if(sort==='name')visible.sort((a,b)=>a.name.localeCompare(b.name));
+    $('productGrid').innerHTML=visible.length?visible.map(p=>`<article class="product-card"><div class="product-media"><img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" loading="lazy">${p.badge?`<span class="product-tag">${escapeHTML(p.badge)}</span>`:''}<button type="button" class="wish-btn ${favorites.includes(p.id)?'liked':''}" data-fav="${p.id}" aria-label="${favorites.includes(p.id)?'Remove from':'Add to'} favourites" aria-pressed="${favorites.includes(p.id)}">${icon('heart')}</button></div><div class="product-body"><span class="product-cat">${escapeHTML(p.category)}</span><h3 class="product-name" title="${escapeHTML(p.description)}">${escapeHTML(p.name)}</h3><p class="product-detail">${escapeHTML(p.size)}</p><div class="product-bottom"><span class="product-price">${money(p.price)}</span><button class="add-btn" data-add="${p.id}" aria-label="Add ${escapeHTML(p.name)} to basket">${icon('plus')}</button></div></div></article>`).join(''):`<div class="empty-state">${icon('search')}<h3>Nothing in the oven for that search</h3><p>Try a different search or category.</p><button class="btn btn-outline" id="clearFilters">Show all treats</button></div>`;
+    $('productCount').textContent=`Showing ${visible.length} of ${PRODUCTS.length} delicious treats`;
+  }
+  function renderCart(){
+    const items=Object.entries(cart).map(([id,qty])=>({product:PRODUCTS.find(p=>p.id===Number(id)),qty})).filter(item=>item.product&&item.qty>0);
+    $('cartItems').innerHTML=items.length?items.map(({product:p,qty})=>`<div class="cart-item"><img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}"><div><h3>${escapeHTML(p.name)}</h3><p>${money(p.price)} · ${escapeHTML(p.size)}</p><div class="cart-item-bottom"><div class="qty-control"><button type="button" data-step="-1" data-id="${p.id}" aria-label="Decrease ${escapeHTML(p.name)}">${icon('minus')}</button><span>${qty}</span><button type="button" data-step="1" data-id="${p.id}" aria-label="Increase ${escapeHTML(p.name)}">${icon('plus')}</button></div><button class="remove-item" type="button" data-remove="${p.id}">Remove</button></div></div></div>`).join(''):`<div class="cart-empty">${icon('bag')}<h3>Your basket is waiting</h3><p>All good things begin with a little treat.</p><button class="btn btn-primary" id="emptyShop">Explore the menu</button></div>`;
+    const sub=subtotal();const delivery=sub>=SETTINGS.freeDeliveryOver?0:SETTINGS.deliveryFee;
+    $('cartFooter').innerHTML=items.length?`<div class="summary-line"><span>Subtotal</span><strong>${money(sub)}</strong></div><div class="summary-line"><span>Estimated delivery</span><strong>${delivery===0?'FREE':money(delivery)}</strong></div><div class="summary-line total"><span>Estimated total</span><span>${money(sub+delivery)}</span></div><p class="delivery-hint">${delivery===0?'Your order qualifies for free local delivery!':`Spend ${money(Math.max(0,SETTINGS.freeDeliveryOver-sub))} more for free delivery`}</p><button class="btn btn-primary" id="goCheckout">Continue to order ${icon('arrow')}</button>`:'';
+  }
+  function openCart(){closeCheckout();$('cartDrawer').classList.add('open');$('overlay').classList.add('show');document.body.classList.add('locked');$('closeCart').focus()}
+  function closeCart(){if(modalOpen)return;$('cartDrawer').classList.remove('open');$('overlay').classList.remove('show');document.body.classList.remove('locked')}
+  function openCheckout(){if(!cartCount()){toast('Add something delicious first.');return}modalOpen=true;$('cartDrawer').classList.remove('open');$('checkoutModal').classList.add('open');$('overlay').classList.add('show');document.body.classList.add('locked');updateCheckoutTotal();$('customerName').focus()}
+  function closeCheckout(){modalOpen=false;$('checkoutModal').classList.remove('open');$('overlay').classList.remove('show');document.body.classList.remove('locked')}
+  function updateCheckoutTotal(){if($('checkoutTotal'))$('checkoutTotal').textContent=money(subtotal()+deliveryCost())}
+  function buildOrder(){
+    const lines=Object.entries(cart).map(([id,qty])=>{const p=PRODUCTS.find(p=>p.id===Number(id));return p?`• ${p.name} × ${qty} — ${money(p.price*qty)}`:null}).filter(Boolean);
+    const type=$('deliveryType').value;const fee=deliveryCost();
+    return [`🧁 *NEW ORDER — ${SETTINGS.bakeryName}*`,'',...lines,'',`Subtotal: ${money(subtotal())}`,`Delivery: ${fee===0?'Free / Pickup':money(fee)}`,`*Estimated total: ${money(subtotal()+fee)}*`,'',`Name: ${$('customerName').value.trim()||'Not provided'}`,`Phone: ${$('customerPhone').value.trim()||'Not provided'}`,`Method: ${type==='pickup'?'Bakery pickup':'Home delivery'}`,...(type==='delivery'?[`Address: ${$('customerAddress').value.trim()||'Not provided'}`]:[]),`Notes: ${$('customerNotes').value.trim()||'None'}`,'','Please confirm availability, delivery details and final total.'].join('\n');
+  }
+  function getCheckoutValidity(){return $('checkoutForm').reportValidity()}
+  // Friendly self-contained artwork if an online photo cannot load (for example, offline).
+  function handleBrokenImage(img){
+    if(img.dataset.fallbackReady)return;
+    img.dataset.fallbackReady='1';
+    const label=String(img.alt||'Freshly baked').slice(0,43).replace(/[<&>]/g,'');
+    const artwork=`<svg xmlns="http://www.w3.org/2000/svg" width="700" height="550" viewBox="0 0 700 550"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="#f6e4d6"/><stop offset="1" stop-color="#dfbca5"/></linearGradient></defs><rect width="700" height="550" fill="url(#g)"/><circle cx="580" cy="80" r="130" fill="#f9eee6" opacity=".42"/><circle cx="130" cy="450" r="150" fill="#f9eee6" opacity=".25"/><g transform="translate(350 235)" stroke="#915d4e" fill="none" stroke-width="7" stroke-linecap="round"><path d="M-90 60h180M-76 60C-140-22-72-105 0-77c72-28 140 55 76 137"/><path d="M-60 5c32-38 50-38 72-6 22-32 43-30 70 6"/><path d="M0-78v-40m0-8v-3"/></g><text x="350" y="364" fill="#653d34" font-family="Georgia,serif" font-size="26" font-weight="bold" text-anchor="middle">Sunehri Bakehouse</text><text x="350" y="406" fill="#916355" font-family="Arial,sans-serif" font-size="17" text-anchor="middle">${label.replace(/&/g,'and')}</text></svg>`;
+    img.src='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(artwork);
+  }
+  document.addEventListener('error',event=>{if(event.target instanceof HTMLImageElement)handleBrokenImage(event.target)},true);
+  document.querySelectorAll('img').forEach(img=>{if(img.complete && !img.naturalWidth)handleBrokenImage(img)});
 
+  function initSite(){
+    document.title=SETTINGS.bakeryName+' | Freshly Baked Happiness';
+    document.querySelectorAll('[data-brand]').forEach(el=>el.textContent=SETTINGS.logoText);
+    document.querySelectorAll('[data-brand-inline]').forEach(el=>el.textContent=SETTINGS.bakeryName);
+    $('contactAddress').textContent=SETTINGS.address;$('contactHours').textContent=SETTINGS.openingHours;
+    if(SETTINGS.contactPhone){$('contactPhoneWrap').hidden=false;$('contactPhone').textContent=SETTINGS.contactPhone}
+    if(SETTINGS.contactEmail){$('contactEmailWrap').hidden=false;$('contactEmail').textContent=SETTINGS.contactEmail}
+    $('instagramLink').href=SETTINGS.instagramUrl;
+    $('announcement').innerHTML=`Freshly baked, delivered with love <span>✦</span> Free delivery on orders over ${money(SETTINGS.freeDeliveryOver)}`;
+    $('copyright').textContent=`© ${new Date().getFullYear()} ${SETTINGS.bakeryName}. All rights reserved.`;
+    renderCategories();setCategory('All');syncCart();
+  }
+  document.addEventListener('click',event=>{
+    const add=event.target.closest('[data-add]');if(add){addToCart(Number(add.dataset.add));return}
+    const cat=event.target.closest('[data-category]');if(cat){setCategory(cat.dataset.category);if(!cat.classList.contains('filter-chip'))$('shop').scrollIntoView({behavior:'smooth'});return}
+    const fav=event.target.closest('[data-fav]');if(fav){const id=Number(fav.dataset.fav);favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];safeSave('sunehri-favs-v1',favorites);renderProducts();toast(favorites.includes(id)?'Saved to favourites':'Removed from favourites');return}
+    const step=event.target.closest('[data-step]');if(step){changeQty(Number(step.dataset.id),Number(step.dataset.step));return}
+    const remove=event.target.closest('[data-remove]');if(remove){removeFromCart(Number(remove.dataset.remove));return}
+    if(event.target.closest('#goCheckout'))openCheckout();
+    if(event.target.closest('#emptyShop')){closeCart();$('shop').scrollIntoView({behavior:'smooth'})}
+    if(event.target.closest('#clearFilters')){$('productSearch').value='';setCategory('All')}
+  });
+  $('openCart').addEventListener('click',openCart);
+  $('closeCart').addEventListener('click',closeCart);
+  $('overlay').addEventListener('click',()=>{if(modalOpen)closeCheckout();else closeCart()});
+  $('closeCheckout').addEventListener('click',closeCheckout);
+  $('productSearch').addEventListener('input',renderProducts);
+  $('sortProducts').addEventListener('change',renderProducts);
+  $('jumpSearch').addEventListener('click',()=>{$('shop').scrollIntoView({behavior:'smooth'});setTimeout(()=>$('productSearch').focus({preventScroll:true}),450)});
+  $('deliveryType').addEventListener('change',()=>{const delivery=$('deliveryType').value==='delivery';$('addressField').hidden=!delivery;$('customerAddress').required=delivery;updateCheckoutTotal()});
+  $('mobileToggle').addEventListener('click',()=>{const open=$('mobileNav').classList.toggle('open');$('mobileToggle').setAttribute('aria-expanded',String(open));$('mobileToggle').innerHTML=icon(open?'x':'menu')});
+  $('mobileNav').addEventListener('click',event=>{if(event.target.closest('a')){$('mobileNav').classList.remove('open');$('mobileToggle').setAttribute('aria-expanded','false');$('mobileToggle').innerHTML=icon('menu')}});
+  $('checkoutForm').addEventListener('submit',event=>{event.preventDefault();if(!getCheckoutValidity())return;openWhatsApp(buildOrder());toast('Order prepared. Complete it in WhatsApp.')});
+  $('copyOrder').addEventListener('click',async()=>{const text=buildOrder();try{await navigator.clipboard.writeText(text);toast('Order details copied!')}catch{const textarea=document.createElement('textarea');textarea.value=text;document.body.appendChild(textarea);textarea.select();try{document.execCommand('copy');toast('Order details copied!')}catch{toast('Copy is unavailable in this browser')}textarea.remove()}});
+  $('customCakeButton').addEventListener('click',()=>openWhatsApp(`Hello ${SETTINGS.bakeryName}! I would like to enquire about a custom cake. Please share your options and ordering details.`));
+  $('floatingWhatsapp').addEventListener('click',()=>openWhatsApp(`Hello ${SETTINGS.bakeryName}! I'd like to ask about your bakery menu.`));
+  $('footerWhatsApp').addEventListener('click',event=>{event.preventDefault();openWhatsApp(`Hello ${SETTINGS.bakeryName}! I'd like to place an order.`)});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'){if(modalOpen)closeCheckout();else closeCart()}});
+  initSite();
+</script>
 </body>
 </html>
